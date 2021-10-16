@@ -104,6 +104,26 @@ private:
                 {
                     send_cmd("id name " + engine_name);
                     send_cmd("id author " + engine_author);
+                    send_cmd("option name Debug Log File type string default");
+                    send_cmd("option name Contempt type spin default 24 min -100 max 100");
+                    send_cmd("option name Analysis Contempt type combo default Both var Off var White var Black var Both");
+                    send_cmd("option name Threads type spin default 1 min 1 max 512");
+                    send_cmd("option name Hash type spin default 16 min 1 max 131072");
+                    send_cmd("option name Clear Hash type button");
+                    send_cmd("option name Ponder type check default false");
+                    send_cmd("option name MultiPV type spin default 1 min 1 max 500");
+                    send_cmd("option name Skill Level type spin default 20 min 0 max 20");
+                    send_cmd("option name Move Overhead type spin default 30 min 0 max 5000");
+                    send_cmd("option name Minimum Thinking Time type spin default 20 min 0 max 5000");
+                    send_cmd("option name Slow Mover type spin default 84 min 10 max 1000");
+                    send_cmd("option name nodestime type spin default 0 min 0 max 10000");
+                    send_cmd("option name UCI_Chess960 type check default false");
+                    send_cmd("option name UCI_AnalyseMode type check default false");
+                    send_cmd("option name SyzygyPath type string default <empty>");
+                    send_cmd("option name SyzygyProbeDepth type spin default 1 min 1 max 100");
+                    send_cmd("option name Syzygy50MoveRule type check default true");
+                    send_cmd("option name SyzygyProbeLimit type spin default 7 min 0 max 7");
+//                    send_cmd("option name Move Overhead type spin default 0 min 0 max 1");
                     send_cmd("uciok");
                 }
 
@@ -222,6 +242,9 @@ private:
                             if (tokens.at(i) == "binc")
                                 b_inc = std::stoi(tokens.at(++i));
 
+                            if (tokens.at(i) == "movetime")
+                                w_time = b_time = w_inc = b_inc = std::stoi(tokens.at(++i));
+
                             if (tokens.at(i) == "infinite")
                             {
                                 i++;
@@ -287,7 +310,7 @@ private:
                     think_state = false;
 
                     send_cmd("bestmove " + bestmove.longform());
-                    send_cmd("info score cp " + std::to_string(static_cast<int>(evaluation*100)));
+                    //send_cmd("info score cp " + std::to_string(static_cast<int>(evaluation*100)));
                 }
             }
         }
